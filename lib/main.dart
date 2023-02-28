@@ -25,3 +25,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+/*Cambiamos nuestro ID de la aplicacion el com.example.notificaciones*/
