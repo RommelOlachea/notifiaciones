@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:notificaciones/services/push_notifications_service.dart';
 import 'package:notificaciones/screens/home_screen.dart';
 import 'package:notificaciones/screens/message_screen.dart';
 
-void main() => runApp(const MyApp());
+void main() async {
+  //con WidgetsFlutterBinding.ensureInitialized(); esta linea nos aseguramos que primero se initialize todo,
+  //antes que los widgets
+  WidgetsFlutterBinding.ensureInitialized();
+  await PushNotificationsService.initializeApp();
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -29,3 +36,5 @@ class MyApp extends StatelessWidget {
 /*Cambiamos nuestro ID de la aplicacion el com.example.notificaciones
   por com.rommelolachea.notificaciones */
 
+/*El token del dispositivo nos sirve para identificarlo, y es unico,
+y se puede generar cada vez que la aplicacion es instalada */
