@@ -34,7 +34,8 @@ class MyApp extends StatelessWidget {
 }
 
 /*Cambiamos nuestro ID de la aplicacion el com.example.notificaciones
-  por com.rommelolachea.notificaciones */
+  por com.rommelolachea.notificaciones, esto nos permitira registrarla primero
+  en firebase para poder enviarle notificaciones */
 
 /*El token del dispositivo nos sirve para identificarlo, y es unico,
-y se puede generar cada vez que la aplicacion es instalada */
+y se puede generar cada vez que la aplicacion es instalada, incluso si es un emulador */
