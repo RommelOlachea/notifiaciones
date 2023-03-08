@@ -19,6 +19,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  //con esto vamos a tener las referencias a los objetos que aun no se han creado
+  //para poder llamarlos una vez que esten creados desde el initState
+  final GlobalKey<NavigatorState> navigatorKey =
+      new GlobalKey<NavigatorState>();
+  final GlobalKey<ScaffoldMessengerState> messengerKey =
+      new GlobalKey<ScaffoldMessengerState>();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -28,7 +35,12 @@ class _MyAppState extends State<MyApp> {
     //suscribimos el _messageStream de tipo StreamController para estar escuchando
     //y poder accesar a la informacion de las notificaciones
     PushNotificationsService.messagesStream.listen((message) {
-      print('MyApp: $message');
+      // print('MyApp: $message');
+
+      navigatorKey.currentState?.pushNamed('message', arguments: message);
+
+      final snackBar = SnackBar(content: Text(message));
+      messengerKey.currentState?.showSnackBar(snackBar);
     });
   }
 
@@ -38,6 +50,8 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'Material App',
       initialRoute: 'home',
+      navigatorKey: navigatorKey, //Navegar
+      scaffoldMessengerKey: messengerKey, //mostrar el snackbar
       routes: {'home': (_) => HomeScreen(), 'message': (_) => MessageScreen()},
       home: Scaffold(
         appBar: AppBar(

@@ -9,7 +9,8 @@ class PushNotificationsService {
   static FirebaseMessaging messaging = FirebaseMessaging.instance;
   static String? token;
   //el streamController nos permitira estar escuchando desde la
-  //pantalla del home (o las pantallas)
+  //pantalla del home (o las pantallas), es a travez de este
+  //que comunicaremos los mensajes recibidos por las notificaciones
   static StreamController<String> _messageStream =
       new StreamController.broadcast();
 
@@ -20,19 +21,21 @@ class PushNotificationsService {
   static Future _backgroundHandler(RemoteMessage message) async {
     // print('background Handler ${message.messageId}');
     print(message.data);
-    _messageStream.add(message.notification?.title ?? 'No title');
+    _messageStream.add(message.data['product'] ?? 'No data');
   }
 
   //cuando la aplicacion esta abierta
   static Future _onMessageHandler(RemoteMessage message) async {
     // print('onMessage Handler ${message.messageId}');
     print(message.data);
-    _messageStream.add(message.notification?.body ?? 'No body');
+    _messageStream.add(message.data['product'] ?? 'No data');
   }
 
+  //cuando la aplicacion esta cerrada
   static Future _onMessageOpenHandler(RemoteMessage message) async {
     print(message.data);
     print('onMessageOpenApp Handler ${message.messageId}');
+    _messageStream.add(message.data['product'] ?? 'No data');
   }
 
   static Future initializeApp() async {
